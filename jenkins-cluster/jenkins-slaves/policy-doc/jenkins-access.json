@@ -1,0 +1,248 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Action": [
+      "ec2:Describe*",
+      "ec2:List*",
+      "ec2:ReportInstanceStatus",
+      "cloudformation:CreateStack",
+      "cloudformation:Describe*",
+      "cloudformation:GetTemplate",
+      "cloudformation:List*",
+      "cloudwatch:Describe*",
+      "cloudwatch:List*",
+      "cloudwatch:EnableAlarmActions",
+      "cloudwatch:PutMetric*",
+      "route53:Get*",
+      "route53:List*",
+      "iam:Get*",
+      "iam:List*",
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey",
+      "kms:CreateGrant",
+      "kms:ListGrants",
+      "rds:Describe*",
+      "sqs:CreateQueue",
+      "sqs:Get*",
+      "sqs:List*",
+      "s3:List*",
+      "elasticache:Create*",
+      "elasticache:Delete*",
+      "elasticache:Describe*",
+      "elasticache:ModifyCacheCluster",
+      "elasticache:AddTagsToResource"
+    ],
+    "Effect": "Allow",
+    "Resource": "*"
+  },
+    {
+      "Action": [
+        "lambda:Create*",
+        "lambda:Delete*",
+        "lambda:RemovePermission",
+        "lambda:Update*",
+        "lambda:InvokeFunction",
+        "lambda:AddPermission",
+        "lambda:TagResource*",
+        "lambda:UntagResource",
+        "lambda:Get*",
+        "lambda:List*"
+      ],
+      "Resource": [
+        "arn:aws:lambda:us-east-1:ACCOUNT_NUMBER_HERE:function:rsvp-*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "elasticache:RebootCacheCluster"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+
+      "Effect": "Allow",
+      "Action": "cloudformation:*",
+      "Resource": [
+        "arn:aws:cloudformation:us-east-1:ACCOUNT_NUMBER_HERE:stack/kafka-*",
+        "arn:aws:cloudformation:us-east-1:ACCOUNT_NUMBER_HERE:stack/zk-*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticmapreduce:RunJobFlow",
+        "elasticmapreduce:Add*",
+        "elasticmapreduce:Describe*",
+        "elasticmapreduce:List*",
+        "elasticmapreduce:TerminateJobFlows",
+        "elasticmapreduce:CancelSteps"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "elasticmapreduce:ResourceTag/component": "ddsolutions"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:Describe*",
+        "autoscaling:CreateAutoScalingGroup",
+        "autoscaling:CreateOrUpdateTags"
+      ],
+      "Resource": [
+        "arn:aws:autoscaling:*:ACCOUNT_NUMBER_HERE:autoScalingGroup:*:autoScalingGroupName/*slave*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:AddTags",
+        "elasticloadbalancing:Create*",
+        "elasticloadbalancing:Describe*"
+      ],
+      "Resource": [
+        "arn:aws:elasticloadbalancing:*:ACCOUNT_NUMBER_HERE:loadbalancer/*slave*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:Create*",
+        "logs:Describe*",
+        "logs:PutLogEvents",
+        "logs:DeleteLogGroup",
+        "logs:PutRetentionPolicy"
+      ],
+      "Resource": "arn:aws:logs:*:*:log-group:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Get*",
+        "s3:List*",
+        "s3:Put*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::teamconcept-*",
+        "arn:aws:s3:::teamconcept-*/*"
+      ]
+    },
+    {
+      "Action": [
+        "s3:CreateBucket*",
+        "s3:Delete*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::teamconcept-*",
+        "arn:aws:s3:::teamconcept-*/*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:iam::ACCOUNT_NUMBER_HERE:role/CodeDeployRole"
+      ]
+    },
+    {
+      "Action": [
+        "dynamodb:*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "athena:BatchGet*",
+        "athena:CreateNamedQuery",
+        "athena:DeleteNamedQuery",
+        "athena:Get*",
+        "athena:List*",
+        "athena:StartQueryExecution",
+        "athena:CancelQueryExecution",
+        "athena:StopQueryExecution",
+        "athena:RunQuery"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "glue:Create*",
+        "glue:Delete*",
+        "glue:Get*",
+        "glue:Update*",
+        "glue:BatchDeleteTable",
+        "glue:BatchCreatePartition",
+        "glue:BatchDeletePartition",
+        "glue:BatchGetPartition"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Action": [
+        "sns:*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "firehose:*",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "kinesis:IncreaseStreamRetentionPeriod",
+        "kinesis:DecreaseStreamRetentionPeriod",
+        "kinesis:UpdateShardCount"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "kinesis:*",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "elasticmapreduce:SetVisibleToAllUsers",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow",
+      "Condition": {
+        "StringEquals": {
+          "elasticmapreduce:ResourceTag/component": "rsvp-processor"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sqs:SendMessage",
+      "Resource": "*"
+    }
+  ]
+}
