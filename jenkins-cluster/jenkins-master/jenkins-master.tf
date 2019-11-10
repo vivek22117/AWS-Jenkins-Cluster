@@ -40,22 +40,13 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
     create_before_destroy = true
   }
 
-  tag {
-    key                 = "Name"
-    value               = "jenkins-master"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Owner"
-    value               = "vivek"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Environment"
-    value               = "dev"
-    propagate_at_launch = true
+  dynamic "tag" {
+    for_each = var.custom_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }
 

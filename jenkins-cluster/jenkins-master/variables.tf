@@ -31,7 +31,20 @@ variable "s3_bucket_prefix" {
   default = "teamconcept-tfstate"
 }
 
-//Local variables
+#####=============ASG Standards Tags===============#####
+variable "custom_tags" {
+  description = "Custom tags to set on the Instances in the ASG"
+  type        = map(string)
+  default = {
+    owner       = "vivek"
+    team        = "doubledigit-solutions"
+    tool        = "Terraform"
+    monitoring  = "true"
+    Name        = "Jenkins-Master"
+  }
+}
+
+####============Local variables============#####
 locals {
   common_tags = {
     owner       = "Vivek"

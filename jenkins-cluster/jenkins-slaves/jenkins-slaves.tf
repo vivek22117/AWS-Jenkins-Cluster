@@ -51,20 +51,14 @@ resource "aws_autoscaling_group" "jenkins_slaves_asg" {
   lifecycle {
     create_before_destroy = true
   }
-  tag {
-    key                 = "Name"
-    value               = "jenkins-slave"
-    propagate_at_launch = true
-  }
-  tag {
-    key                 = "Author"
-    value               = "vivek"
-    propagate_at_launch = true
-  }
-  tag {
-    key                 = "Tool"
-    value               = "Terraform"
-    propagate_at_launch = true
+
+  dynamic "tag" {
+    for_each = var.custom_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }
 
