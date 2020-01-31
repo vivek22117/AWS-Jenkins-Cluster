@@ -1,5 +1,5 @@
 resource "aws_iam_role" "jenkins_access_role" {
-  name = "JenkinsSlavesRole"
+    name = "JenkinsSlavesRole"
   path = "/"
 
   assume_role_policy = <<EOF

@@ -1,4 +1,4 @@
-//Global Variables
+#####===========Global Variables==================#####
 variable "profile" {
   type        = string
   description = "AWS Profile name for credentials"

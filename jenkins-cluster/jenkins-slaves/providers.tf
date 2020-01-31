@@ -17,7 +17,7 @@ terraform {
   required_version = ">= 0.12"                   // Terraform version
 
   backend "s3" {
-    profile        = "doubledigit"
+    profile        = "admin"
     bucket         = "teamconcept-tfstate-dev-us-east-1"
     dynamodb_table = "teamconcept-tfstate-dev-us-east-1"
     key            = "state/dev/jenkins-slaves-cluster/terraform.tfstate"

@@ -1,4 +1,4 @@
-//Security Group for Jenkins Slaves
+#####============Security Group for Jenkins Slaves=================#####
 resource "aws_security_group" "jenkins_slaves_sg" {
   name        = "jenkin-slaves-sg"
   description = "Allow traffic on port 22 from Jenkins Master"

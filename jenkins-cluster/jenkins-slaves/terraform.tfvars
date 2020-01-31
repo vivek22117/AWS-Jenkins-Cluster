@@ -1,4 +1,4 @@
-profile                = "doubledigit"
+profile                = "admin"
 environment            = "dev"
 jenkins_username       = "vivek22117"
 jenkins_password       = "don@2244"

@@ -1,4 +1,4 @@
-// Jenkins slaves resource template
+#####==================Jenkins slaves resource template===================#####
 data "template_file" "user_data_slave" {
   template = file("scripts/join-cluster.tpl")
 
@@ -11,7 +11,7 @@ data "template_file" "user_data_slave" {
   }
 }
 
-// Jenkins slaves launch configuration
+#####=============enkins slaves launch configuration=========================#####
 resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
   name_prefix = "jenkins-slave-"
 
