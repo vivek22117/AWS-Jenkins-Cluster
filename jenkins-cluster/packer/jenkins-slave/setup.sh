@@ -1,17 +1,17 @@
 #!/bin/bash
 
 echo "Install Java JDK 8"
-yum remove -y java
-yum install -y java-1.8.0-openjdk
+sudo yum remove -y java
+sudo yum install -y java-1.8*
 
 echo "Install Docker engine"
-yum update -y
-yum install docker -y
-usermod -aG docker ec2-user
-service docker start
+sudo yum update -y
+sudo yum install docker -y
+sudo usermod -aG docker ec2-user
+sudo service docker start
 
 echo "Install git"
-yum install -y git
+sudo yum install -y git
 
 echo "Install Telegraf"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
