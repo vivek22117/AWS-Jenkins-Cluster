@@ -1,5 +1,5 @@
 resource "aws_iam_role" "jenkins_access_role" {
-    name = "JenkinsSlavesRole"
+  name = "JenkinsSlavesRole"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -8,11 +8,10 @@ resource "aws_iam_role" "jenkins_access_role" {
     "Statement": [
         {
             "Action": "sts:AssumeRole",
+            "Effect": "Allow",
             "Principal": {
                "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
+            }
         }
     ]
 }
@@ -21,9 +20,9 @@ EOF
 }
 
 resource "aws_iam_policy" "jenkins_access_policy" {
-  name = "JenkinsAWSResourcePolicy"
+  name        = "JenkinsAWSResourcePolicy"
   description = "Policy to access AWS Resources"
-  path = "/"
+  path        = "/"
 
   policy = <<EOF
 {
@@ -41,12 +40,12 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "policy_role_attach" {
-policy_arn = aws_iam_policy.jenkins_access_policy.arn
-role       = aws_iam_role.jenkins_access_role.name
+  policy_arn = aws_iam_policy.jenkins_access_policy.arn
+  role       = aws_iam_role.jenkins_access_role.name
 }
 
 resource "aws_iam_instance_profile" "jenkins_profile" {
-name = "JenkinsSlavesAccessProfile"
-role = aws_iam_role.jenkins_access_role.name
+  name = "JenkinsSlavesAccessProfile"
+  role = aws_iam_role.jenkins_access_role.name
 }
 

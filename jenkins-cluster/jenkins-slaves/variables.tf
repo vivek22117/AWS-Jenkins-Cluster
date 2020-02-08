@@ -6,7 +6,7 @@ variable "profile" {
 
 variable "environment" {
   type        = string
-  description = "AWS Profile name for credentials"
+  description = "Environment to be configured 'dev', 'qa', 'prod'"
 }
 
 variable "jenkins_username" {
@@ -29,12 +29,12 @@ variable "default_region" {
 
 variable "dyanamoDB_prefix" {
   type    = string
-  default = "teamconcept-tfstate"
+  default = "doubledigit-tfstate"
 }
 
 variable "s3_bucket_prefix" {
   type    = string
-  default = "teamconcept-tfstate"
+  default = "doubledigit-tfstate"
 }
 
 #####=============ASG Standards Tags===============#####
@@ -42,8 +42,8 @@ variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
-    owner       = "vivek"
-    team        = "doubledigit-solutions"
+    owner       = "Vivek"
+    team        = "DoubleDigitTeam"
     tool        = "Terraform"
     monitoring  = "true"
     Name        = "Jenkins-Salve"
@@ -54,7 +54,7 @@ variable "custom_tags" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "TeamConcept"
+    team        = "DoubleDigitTeam"
     environment = var.environment
   }
 }

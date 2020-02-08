@@ -17,3 +17,7 @@ output "jenkins_key" {
 output "jenkins_profile" {
   value = aws_iam_instance_profile.jenkins_profile.arn
 }
+
+output "route53_public_dns_name" {
+  value       =  aws_route53_record.jenkins_record.*.name[0]
+}

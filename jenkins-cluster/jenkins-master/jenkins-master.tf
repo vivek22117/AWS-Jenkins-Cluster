@@ -76,11 +76,7 @@ resource "aws_elb" "jenkins_elb" {
     target              = "TCP:8080"
     interval            = 5
   }
-  tags = {
-    Name        = "jenkins_elb"
-    Author      = "vivek"
-    Tool        = "Terraform"
-    Environment = "dev"
-  }
+
+  tags = merge(local.common_tags, map("Name", "jenkins-master-lb"))
 }
 

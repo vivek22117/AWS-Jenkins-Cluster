@@ -2,7 +2,7 @@ provider "aws" {
   region  = var.default_region                // Interpolation Syntax
   profile = var.profile
 
-  version = "2.17.0"                          // AWS plugin version
+  version = ">=2.22"                          // AWS plugin version
 }
 
 provider "template" {
@@ -18,8 +18,8 @@ terraform {
 
   backend "s3" {
     profile        = "admin"
-    bucket         = "teamconcept-tfstate-dev-us-east-1"
-    dynamodb_table = "teamconcept-tfstate-dev-us-east-1"
+    bucket         = "doubledigit-tfstate-dev-us-east-1"
+    dynamodb_table = "doubledigit-tfstate-dev-us-east-1"
     key            = "state/dev/jenkins-slaves-cluster/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = "true"

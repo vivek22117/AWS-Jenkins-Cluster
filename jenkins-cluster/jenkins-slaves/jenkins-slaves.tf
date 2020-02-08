@@ -35,7 +35,7 @@ resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
   }
 }
 
-// ASG Jenkins slaves
+#####===========================ASG Jenkins slaves===============================#####
 resource "aws_autoscaling_group" "jenkins_slaves_asg" {
   name_prefix = "${aws_launch_configuration.jenkins_slave_launch_conf.name}-asg"
 
@@ -62,8 +62,9 @@ resource "aws_autoscaling_group" "jenkins_slaves_asg" {
   }
 }
 
-// Scale out
-resource "aws_cloudwatch_metric_alarm" "high-cpu-jenkins-slaves-alarm" {
+
+#####===============Jenkins Slave ASG scalaing alarm and policy==================#####
+resource "aws_cloudwatch_metric_alarm" "high_cpu_jenkins_slaves_alarm" {
   alarm_name          = "high-cpu-jenkins-slaves-alarm"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
@@ -78,10 +79,10 @@ resource "aws_cloudwatch_metric_alarm" "high-cpu-jenkins-slaves-alarm" {
   }
 
   alarm_description = "This metric monitors ec2 cpu utilization"
-  alarm_actions     = [aws_autoscaling_policy.scale-out.arn]
+  alarm_actions     = [aws_autoscaling_policy.scale_out.arn]
 }
 
-resource "aws_autoscaling_policy" "scale-out" {
+resource "aws_autoscaling_policy" "scale_out" {
   name                   = "scale-out-jenkins-slaves"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
@@ -89,8 +90,7 @@ resource "aws_autoscaling_policy" "scale-out" {
   autoscaling_group_name = aws_autoscaling_group.jenkins_slaves_asg.name
 }
 
-// Scale In
-resource "aws_cloudwatch_metric_alarm" "low-cpu-jenkins-slaves-alarm" {
+resource "aws_cloudwatch_metric_alarm" "low_cpu_jenkins_slaves_alarm" {
   alarm_name          = "low-cpu-jenkins-slaves-alarm"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "2"
@@ -105,10 +105,10 @@ resource "aws_cloudwatch_metric_alarm" "low-cpu-jenkins-slaves-alarm" {
   }
 
   alarm_description = "This metric monitors ec2 cpu utilization"
-  alarm_actions     = [aws_autoscaling_policy.scale-in.arn]
+  alarm_actions     = [aws_autoscaling_policy.scale_in.arn]
 }
 
-resource "aws_autoscaling_policy" "scale-in" {
+resource "aws_autoscaling_policy" "scale_in" {
   name                   = "scale-in-jenkins-slaves"
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
