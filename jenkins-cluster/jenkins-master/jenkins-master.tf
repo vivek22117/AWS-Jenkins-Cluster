@@ -12,13 +12,15 @@ resource "aws_launch_configuration" "jenkins_master" {
 
   name_prefix          = "jenkins-"
   image_id             = data.aws_ami.jenkins-master-ami.id
-  instance_type        = var.environment == "dev" ? "t2.micro" : "t2.small"
+  instance_type        = var.environment == "dev" ? "t2.small" : var.instance_type
   iam_instance_profile = aws_iam_instance_profile.jenkins_profile.id
   key_name             = aws_key_pair.jenkins_master.key_name
   security_groups      = [aws_security_group.jenkins_master_sg.id]
 
   associate_public_ip_address = false
   enable_monitoring           = false
+
+  spot_price = var.spot_price
 
   lifecycle {
     create_before_destroy = true

@@ -21,6 +21,26 @@ variable "jenkins_credentials_id" {
   description = "Slaves SSH ID"
 }
 
+variable "spot_price" {
+  type        = string
+  description = "EC2 spot price"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "EC2 instance type to launch!"
+}
+
+variable "instance_count" {
+  type        = number
+  description = "Number of jenkins slaves to launch"
+}
+
+variable "max_count" {
+  type        = number
+  description = "Max count for autoscaling group"
+}
+
 //Default Variables
 variable "default_region" {
   type    = string
@@ -42,11 +62,11 @@ variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
-    owner       = "Vivek"
-    team        = "DoubleDigitTeam"
-    tool        = "Terraform"
-    monitoring  = "true"
-    Name        = "Jenkins-Salve"
+    owner      = "Vivek"
+    team       = "DoubleDigitTeam"
+    tool       = "Terraform"
+    monitoring = "true"
+    Name       = "Jenkins-Salve"
   }
 }
 

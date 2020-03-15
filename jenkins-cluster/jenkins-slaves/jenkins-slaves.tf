@@ -16,7 +16,7 @@ resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
   name_prefix = "jenkins-slave-"
 
   image_id        = data.aws_ami.jenkins-slave-ami.id
-  instance_type   = var.environment == "prod" ? "t2.small" : "t2.micro"
+  instance_type   = var.environment == "prod" ? "t2.small" : var.instance_type
   key_name        = data.terraform_remote_state.jenkins-master.outputs.jenkins_key
   security_groups = [aws_security_group.jenkins_slaves_sg.id]
 
@@ -30,6 +30,8 @@ resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
     delete_on_termination = true
   }
 
+  spot_price = var.spot_price
+
   lifecycle {
     create_before_destroy = true
   }
@@ -39,9 +41,9 @@ resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
 resource "aws_autoscaling_group" "jenkins_slaves_asg" {
   name_prefix = "${aws_launch_configuration.jenkins_slave_launch_conf.name}-asg"
 
-  max_size         = 3
-  min_size         = var.environment == "prod" ? 2 : 1
-  desired_capacity = var.environment == "prod" ? 2 : 1
+  max_size             = var.max_count
+  min_size             = var.environment == "prod" ? 2 : var.instance_count
+  desired_capacity     = var.environment == "prod" ? 2 : var.instance_count
   vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.private_subnets
   launch_configuration = aws_launch_configuration.jenkins_slave_launch_conf.name
 

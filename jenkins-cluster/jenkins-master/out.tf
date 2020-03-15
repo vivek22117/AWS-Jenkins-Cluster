@@ -19,5 +19,5 @@ output "jenkins_profile" {
 }
 
 output "route53_public_dns_name" {
-  value       =  aws_route53_record.jenkins_record.*.name[0]
+  value = aws_route53_record.jenkins_record.*.name[0]
 }

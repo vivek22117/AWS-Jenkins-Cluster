@@ -15,8 +15,18 @@ variable "environment" {
 }
 
 variable "jenkins_dns_name" {
-  type = string
+  type        = string
   description = "DNS name to be applied for jenkins cluster"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "EC2 instance type to launch!"
+}
+
+variable "spot_price" {
+  type        = string
+  description = "EC2 spot price"
 }
 
 
