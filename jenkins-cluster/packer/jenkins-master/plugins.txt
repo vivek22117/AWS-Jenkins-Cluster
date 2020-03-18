@@ -6,6 +6,10 @@ apache-httpcomponents-client-4-api
 authentication-tokens
 aws-credentials
 aws-java-sdk
+authorize-project
+terraform
+job-dsl-1.55
+nodelabelparameter
 blueocean
 blueocean-autofavorite
 blueocean-bitbucket-pipeline

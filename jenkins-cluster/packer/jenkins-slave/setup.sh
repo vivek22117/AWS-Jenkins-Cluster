@@ -8,7 +8,7 @@ echo "Install Docker engine"
 sudo yum update -y
 sudo yum install docker -y
 sudo usermod -aG docker ec2-user
-sudo service docker start
+sudo systemctl start docker
 
 echo "Install git"
 sudo yum install -y git

@@ -9,3 +9,15 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+//TO DO...
+/*data "template_file" "ecs_task_policy_template" {
+  template = file("${path.module}/policy-scripts/jenkins-access-policy.json")
+
+  vars = {
+    account_id     = data.aws_caller_identity.current.id
+    environment    = var.environment
+    aws_region = var.default_region
+  }
+}*/
+
+data "aws_caller_identity" "current" {}

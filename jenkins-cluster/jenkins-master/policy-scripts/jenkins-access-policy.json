@@ -1,0 +1,280 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "kms:*",
+      "Effect": "Allow",
+      "Resource": [
+        "*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "elasticmapreduce:ResourceTag/component": "dd-*"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "rds:DescribeDBInstances",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "rds:RebootDBInstance",
+        "rds:StartDBInstance",
+        "rds:StopDBInstance"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "rds:db-tag/component": "dd-*",
+          "aws:PrincipalTag/CostCenter": "DoubleDigit"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "ec2:ResourceTag/CostCenter": "${aws:PrincipalTag/CostCenter}"
+        }
+      }
+    },
+    {
+    "Action": [
+      "cloudformation:CreateStack",
+      "cloudformation:Describe*",
+      "cloudformation:GetTemplate",
+      "cloudformation:List*",
+      "cloudwatch:Describe*",
+      "cloudwatch:List*",
+      "cloudwatch:EnableAlarmActions",
+      "cloudwatch:PutMetric*",
+      "route53:Get*",
+      "route53:List*",
+    ],
+    "Effect": "Allow",
+    "Resource": "*",
+    "Condition": {
+      "StringEquals": {
+        "elasticmapreduce:ResourceTag/component": "dd-*"
+      }
+    }
+  },
+    {
+      "Action": [
+        "lambda:Create*",
+        "lambda:Delete*",
+        "lambda:RemovePermission",
+        "lambda:Update*",
+        "lambda:InvokeFunction",
+        "lambda:AddPermission",
+        "lambda:TagResource*",
+        "lambda:UntagResource",
+        "lambda:Get*",
+        "lambda:List*"
+      ],
+      "Resource": [
+        "arn:aws:lambda:${aws_region}:${account_id}:function:*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "elasticache:RebootCacheCluster",
+        "elasticache:Create*",
+        "elasticache:Delete*",
+        "elasticache:Describe*",
+        "elasticache:ModifyCacheCluster",
+        "elasticache:AddTagsToResource"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+
+      "Effect": "Allow",
+      "Action": "cloudformation:*",
+      "Resource": [
+        "arn:aws:cloudformation:${aws_region}:${account_id}:stack/dd-*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticmapreduce:RunJobFlow",
+        "elasticmapreduce:Add*",
+        "elasticmapreduce:Describe*",
+        "elasticmapreduce:List*",
+        "elasticmapreduce:TerminateJobFlows",
+        "elasticmapreduce:CancelSteps"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "elasticmapreduce:ResourceTag/component": "ddsolutions"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:Describe*",
+        "autoscaling:CreateAutoScalingGroup",
+        "autoscaling:CreateOrUpdateTags"
+      ],
+      "Resource": [
+        "arn:aws:autoscaling:${aws_region}:${account_id}:autoScalingGroup:*:autoScalingGroupName/*slave*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:AddTags",
+        "elasticloadbalancing:Create*",
+        "elasticloadbalancing:Describe*"
+      ],
+      "Resource": [
+        "arn:aws:elasticloadbalancing:${aws_region}:${account_id}:loadbalancer/*slave*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:Create*",
+        "logs:Describe*",
+        "logs:PutLogEvents",
+        "logs:DeleteLogGroup",
+        "logs:PutRetentionPolicy"
+      ],
+      "Resource": "arn:aws:logs:*:*:log-group:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Get*",
+        "s3:List*",
+        "s3:Put*",
+        "s3:CreateBucket*",
+        "s3:Delete*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::doubledigit-*",
+        "arn:aws:s3:::doubledigit-*/*"
+      ]
+    },
+    {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:iam:${aws_region}:${account_id}:role/CodeDeployRole"
+      ]
+    },
+    {
+      "Action": [
+        "dynamodb:*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "athena:BatchGet*",
+        "athena:CreateNamedQuery",
+        "athena:DeleteNamedQuery",
+        "athena:Get*",
+        "athena:List*",
+        "athena:StartQueryExecution",
+        "athena:CancelQueryExecution",
+        "athena:StopQueryExecution",
+        "athena:RunQuery"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "glue:Create*",
+        "glue:Delete*",
+        "glue:Get*",
+        "glue:Update*",
+        "glue:BatchDeleteTable",
+        "glue:BatchCreatePartition",
+        "glue:BatchDeletePartition",
+        "glue:BatchGetPartition"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Action": [
+        "sns:*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "firehose:*",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "kinesis:IncreaseStreamRetentionPeriod",
+        "kinesis:DecreaseStreamRetentionPeriod",
+        "kinesis:UpdateShardCount"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "kinesis:*",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": "elasticmapreduce:SetVisibleToAllUsers",
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow",
+      "Condition": {
+        "StringEquals": {
+          "elasticmapreduce:ResourceTag/component": "dd-*"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sqs:SendMessage",
+      "Resource": "*"
+    }
+  ]
+}

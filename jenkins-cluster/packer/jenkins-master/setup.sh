@@ -5,10 +5,11 @@ sudo yum remove -y java
 sudo yum install -y java-1.8*
 sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
 sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-sudo yum install -y jenkins
+sudo yum --showduplicates list jenkins | expand
+sudo yum install -y jenkins-2.204.5-1.1
 sudo chkconfig jenkins on
 
-echo "Install Telegraf"
+echo "Install Telegraph"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
 yum localinstall -y /tmp/telegraf.rpm
 rm /tmp/telegraf.rpm

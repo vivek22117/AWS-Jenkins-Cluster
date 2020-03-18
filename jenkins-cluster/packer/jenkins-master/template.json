@@ -11,14 +11,15 @@
             "instance_type" : "t2.small",
             "source_ami" : "{{user `source_ami`}}",
             "ssh_username" : "ec2-user",
-            "ami_name" : "jenkins-master-2.138.2",
+            "ami_name" : "jenkins-master-2.204",
             "ami_description" : "Amazon Linux Image with Jenkins Master",
             "run_tags" : {
                 "Name" : "packer-builder"
             },
             "tags" : {
                 "Tool" : "Packer",
-                "Author" : "vivek"
+                "Author" : "vivek",
+                "Name": "Jenkins-Master-2.204"
             }
         }
     ],
