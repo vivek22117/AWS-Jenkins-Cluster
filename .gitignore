@@ -26,6 +26,19 @@ hs_err_pid*
 *.iml
 .idea
 .idea/
+
 #Terraform files
 .terraform
 *.tfstate*
+terraform.tfvars
+
+# Intellij
+.idea/libraries/*.xml
+*.iws
+.idea/*
+
+
+target/
+
+
+/target/**
