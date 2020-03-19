@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo systemctl start docker
+
 JENKINS_URL="${jenkins_url}"
 JENKINS_USERNAME="${jenkins_username}"
 JENKINS_PASSWORD="${jenkins_password}"
