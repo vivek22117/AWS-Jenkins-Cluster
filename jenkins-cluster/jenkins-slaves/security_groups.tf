@@ -5,7 +5,7 @@ resource "aws_security_group" "jenkins_slaves_sg" {
   description = "Allow traffic on port 22 from Jenkins Master"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, map("Name", "jenkins-slave-sg"))
 }
 
 resource "aws_security_group_rule" "allow_ssh_traffic_for_slaves" {

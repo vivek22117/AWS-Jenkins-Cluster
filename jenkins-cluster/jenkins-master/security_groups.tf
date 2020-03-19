@@ -4,7 +4,7 @@ resource "aws_security_group" "jenkins_master_sg" {
   description = "Allow traffic from port 8080 and enable SSH"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, map("Name", "jenkins-master-sg"))
 }
 
 resource "aws_security_group_rule" "allow_traffic_from_lb" {
@@ -41,7 +41,7 @@ resource "aws_security_group" "lb_sg" {
   description = "load balancer security group"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, map("Name", "jenkins-lb-sg"))
 }
 
 resource "aws_security_group_rule" "allow_http" {
