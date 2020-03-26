@@ -19,4 +19,4 @@ Project is created with:
 * AWS EC2, Auto-scaling Group, ELB, AWS Launch-Template, Security Groups, EBS, Route53
 
 ## Flow-Diagram
-![Data Flow Diagram for RSVP Feeds](./images/flow-diagram.png)
+![Data Flow Diagram for RSVP Feeds](./images/jenkins-diagram.png)
