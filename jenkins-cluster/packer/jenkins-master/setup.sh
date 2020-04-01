@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "Configure EFS for storage"
+sudo yum update -y
+sudo yum install nfs-utils
+sudo mkdir -p /var/lib/jenkins
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-5640c49f.efs.eu-west-1.amazonaws.com:/ /var/lib/jenkins
+
 echo "Install Jenkins stable release"
 sudo yum remove -y java
 sudo yum install -y java-1.8*
@@ -8,6 +14,7 @@ sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 sudo yum --showduplicates list jenkins | expand
 sudo yum install -y jenkins-2.204.5-1.1
 sudo chkconfig jenkins on
+sudo chown -R jenkins:jenkins /var/lib/jenkins
 
 echo "Install Telegraph"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
