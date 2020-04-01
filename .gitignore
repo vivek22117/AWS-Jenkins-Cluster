@@ -23,6 +23,7 @@
 hs_err_pid*
 
 *.xml
+AWS*.xml
 *.iml
 .idea
 .idea/
