@@ -9,6 +9,14 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+data "template_file" "script" {
+  template = file("script/user-data.tpl")
+
+  vars = {
+    efs_id = var.efs_domain
+  }
+}
+
 //TO DO...
 /*data "template_file" "ecs_task_policy_template" {
   template = file("${path.module}/policy-scripts/jenkins-access-policy.json")

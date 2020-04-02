@@ -17,6 +17,8 @@ resource "aws_launch_configuration" "jenkins_master" {
   key_name             = aws_key_pair.jenkins_master.key_name
   security_groups      = [aws_security_group.jenkins_master_sg.id]
 
+  user_data = data.template_file.script.rendered
+
   associate_public_ip_address = false
   enable_monitoring           = false
 

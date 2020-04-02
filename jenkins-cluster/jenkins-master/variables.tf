@@ -29,6 +29,11 @@ variable "spot_price" {
   description = "EC2 spot price"
 }
 
+variable "efs_domain" {
+  type = string
+  description = "EFS domain generated"
+}
+
 
 #####=====================Default Variables=====================#####
 variable "default_region" {

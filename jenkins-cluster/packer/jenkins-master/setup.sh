@@ -1,20 +1,27 @@
 #!/bin/bash
 
 echo "Configure EFS for storage"
-sudo yum update -y
-sudo yum install nfs-utils
-sudo mkdir -p /var/lib/jenkins
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-5640c49f.efs.eu-west-1.amazonaws.com:/ /var/lib/jenkins
+yum update -y
+#yum install nfs-utils
+#
+#sleep 5
+#cd ..
+#cd ..
+#cd var
+#cd lib
+#mkdir -p jenkins
+#mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-b30f2f33.efs.us-east-1.amazonaws.com:/ jenkins
+
+sleep 10
 
 echo "Install Jenkins stable release"
-sudo yum remove -y java
-sudo yum install -y java-1.8*
-sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
-sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-sudo yum --showduplicates list jenkins | expand
-sudo yum install -y jenkins-2.204.5-1.1
-sudo chkconfig jenkins on
-sudo chown -R jenkins:jenkins /var/lib/jenkins
+yum remove -y java
+yum install -y java-1.8.0-openjdk
+wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+yum --showduplicates list jenkins | expand
+yum install -y jenkins-2.204.5-1.1
+chkconfig jenkins on
 
 echo "Install Telegraph"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
@@ -24,6 +31,8 @@ chkconfig telegraf on
 mv /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 service telegraf start
 
+sleep 10
+
 echo "Install git"
 yum install -y git
 
@@ -32,15 +41,19 @@ sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 
+sleep 10
+
 echo "Setup SSH key"
-mkdir /var/lib/jenkins/.ssh
+mkdir -p /var/lib/jenkins/.ssh
 touch /var/lib/jenkins/.ssh/known_hosts
 chown -R jenkins:jenkins /var/lib/jenkins/.ssh
 chmod 700 /var/lib/jenkins/.ssh
 cp /tmp/id_rsa /var/lib/jenkins/.ssh/id_rsa && chown jenkins:jenkins /tmp/id_rsa
 mv /tmp/id_rsa.pub /var/lib/jenkins/.ssh/id_rsa.pub
 chmod 600 /var/lib/jenkins/.ssh/id_rsa /var/lib/jenkins/.ssh/id_rsa.pub
+echo "SSH setup Completed!"
 
+sleep 10
 
 echo "Configure Jenkins"
 mkdir -p /var/lib/jenkins/init.groovy.d

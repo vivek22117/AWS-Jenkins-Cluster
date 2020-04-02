@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "allow_http" {
   to_port           = 2049
   protocol          = "tcp"
   security_group_id = aws_security_group.jenkins-efs-sg.id
-  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr_block]
+  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr]
 }
 
 resource "aws_security_group_rule" "allow_outbound_traffic_lb" {
@@ -42,6 +42,6 @@ resource "aws_security_group_rule" "allow_outbound_traffic_lb" {
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr_block]
+  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr]
   security_group_id = aws_security_group.jenkins-efs-sg.id
 }
