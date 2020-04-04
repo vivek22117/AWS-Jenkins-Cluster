@@ -38,6 +38,8 @@ terraform.tfvars
 *.iws
 .idea/*
 
+*.iml
+
 
 target/
 
