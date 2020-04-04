@@ -30,7 +30,7 @@ variable "spot_price" {
 }
 
 variable "efs_domain" {
-  type = string
+  type        = string
   description = "EFS domain generated"
 }
 
