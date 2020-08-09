@@ -5,4 +5,4 @@ jenkins_dns_name = "jenkins.console.doubledigit-solutions.com"
 instance_type    = "t2.small"
 spot_price       = "0.00900"
 
-efs_domain = "fs-09b79889.efs.us-east-1.amazonaws.com"
+efs_domain = "fs-e06e4560.efs.us-east-1.amazonaws.com"

@@ -1,0 +1,40 @@
+{
+    "variables" : {
+        "region" : "us-east-1",
+        "source_ami" : "ami-0cc96feef8c6bbff3"
+    },
+    "builders" : [
+        {
+            "type" : "amazon-ebs",
+            "profile" : "admin",
+            "region" : "{{user `region`}}",
+            "instance_type" : "t2.micro",
+            "source_ami" : "{{user `source_ami`}}",
+            "ssh_username" : "ec2-user",
+            "ami_name" : "jenkins-slave-ddsolutions",
+            "ami_description" : "Amazon Linux Image for Jenkins Slave",
+            "run_tags" : {
+                "Name" : "packer-builder-docker",
+                "Project": "DoubleDigit-Solutions"
+            },
+            "tags" : {
+                "Tool" : "Packer",
+                "Author" : "vivek",
+                "Name": "Jenkins-Slave-AMI",
+                "Project": "DoubleDigit-Solutions"
+            }
+        }
+    ],
+    "provisioners" : [
+        {
+            "type" : "file",
+            "source" : "./telegraf.conf",
+            "destination" : "/tmp/telegraf.conf"
+        },
+        {
+            "type" : "shell",
+            "script" : "./setup.sh",
+            "execute_command" : "sudo -E -S sh '{{ .Path }}'"
+        }
+    ]
+}
