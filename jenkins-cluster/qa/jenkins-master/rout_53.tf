@@ -1,7 +1,7 @@
 resource "aws_route53_record" "jenkins_record" {
   count = var.jenkins_dns_name != "" ? 1 : 0
 
-  zone_id = "ZBX492LUUAYS7"
+  zone_id = "Z029807318ZYBD0ARNFLS"
   name    = var.jenkins_dns_name
   type    = "A"
 
