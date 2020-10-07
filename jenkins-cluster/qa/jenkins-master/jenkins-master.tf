@@ -30,14 +30,16 @@ resource "aws_launch_configuration" "jenkins_master" {
 }
 
 resource "aws_autoscaling_group" "jenkins_master_asg" {
-  name = "${aws_launch_configuration.jenkins_master.name}-asg"
+  depends_on = [aws_lb.jenkins_alb]
+
+  name_prefix         = "${aws_launch_configuration.jenkins_master.name}-asg"
 
   vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.private_subnets
   max_size             = 3
   min_size             = var.environment == "prod" ? 2 : 1
   desired_capacity     = var.environment == "prod" ? 2 : 1
   launch_configuration = aws_launch_configuration.jenkins_master.id
-  load_balancers       = [aws_elb.jenkins_elb.name]
+  target_group_arns = [aws_lb_target_group.jenkins_target_group.arn]
   health_check_type    = "ELB"
 
   lifecycle {
@@ -54,33 +56,55 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
   }
 }
 
-resource "aws_elb" "jenkins_elb" {
+resource "aws_lb" "jenkins_alb" {
+  name = "jenkins-cluster-alb"
+
   subnets                   = data.terraform_remote_state.vpc.outputs.public_subnets
-  cross_zone_load_balancing = true
   security_groups           = [aws_security_group.lb_sg.id]
   internal                  = false
-
-  /*  listener {
-    instance_port     = 8080
-    instance_protocol = "http"
-    lb_port           = 443
-    lb_protocol       = "https"
-  }*/
-
-  listener {
-    instance_port     = 8080
-    instance_protocol = "http"
-    lb_port           = 80
-    lb_protocol       = "http"
-  }
-  health_check {
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 3
-    target              = "TCP:8080"
-    interval            = 5
-  }
+  enable_http2              = "true"
+  idle_timeout              = 300
 
   tags = merge(local.common_tags, map("Name", "jenkins-master-lb"))
 }
 
+
+resource "aws_lb_listener" "jenkins_alb_listener" {
+  load_balancer_arn = aws_lb.jenkins_alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.jenkins_target_group.arn
+  }
+}
+
+resource "aws_lb_target_group" "jenkins_target_group" {
+  name = "jenkins-tg-${var.environment}"
+
+  port        = var.default_target_group_port
+  protocol    = "HTTP"
+  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  target_type = "instance"
+
+  tags = {
+    name = "jenkins-tg"
+  }
+
+  health_check {
+    enabled             = true
+    protocol            = "HTTP"
+    healthy_threshold   = 5
+    unhealthy_threshold = 5
+    timeout             = 5
+    interval            = 30
+    path                = "/"
+    matcher             = "200,301,302"
+  }
+}
+
+resource "aws_autoscaling_attachment" "jenkins_alb_att" {
+  alb_target_group_arn   = aws_lb_target_group.jenkins_target_group.arn
+  autoscaling_group_name = aws_autoscaling_group.jenkins_master_asg.name
+}

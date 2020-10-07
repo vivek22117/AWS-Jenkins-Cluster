@@ -3,7 +3,7 @@
 set -e
 
 plugin_dir=/var/lib/jenkins/plugins
-file_owner=jenkins.jenkins
+file_owner=jenkins:jenkins
 
 mkdir -p /var/lib/jenkins/plugins
 
