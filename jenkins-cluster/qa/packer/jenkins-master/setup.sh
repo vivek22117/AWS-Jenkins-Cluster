@@ -12,18 +12,19 @@ cd lib
 sudo mkdir -p jenkins
 
 echo "Mounting volume..."
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-a0f80b22.efs.us-east-1.amazonaws.com:/ jenkins
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-2f074dad.efs.us-east-1.amazonaws.com:/ jenkins
 
 sleep 10
 
 echo "Install Jenkins stable release"
 yum remove -y java
 yum install -y java-1.8.0-openjdk
-sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
-sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-sleep 5
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins-ci.org/redhat/jenkins.repo --no-check-certificate
+#sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+sleep 11
 yum --showduplicates list jenkins | expand
-sudo yum install -y jenkins-2.222.4-1.1
+sudo yum install -y jenkins-2.235.4-1.1
 chkconfig jenkins on
 
 sleep 5

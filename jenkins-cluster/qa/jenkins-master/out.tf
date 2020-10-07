@@ -3,7 +3,7 @@ output "jenkins_role" {
 }
 
 output "jenkins_elb_dns" {
-  value = aws_elb.jenkins_elb.dns_name
+  value = aws_lb.jenkins_alb.dns_name
 }
 
 output "jenkins_master_sg" {
