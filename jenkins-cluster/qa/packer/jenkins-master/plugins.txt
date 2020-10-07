@@ -73,6 +73,7 @@ mailer
 matrix-auth
 matrix-project
 maven-plugin
+gradle
 mercurial
 momentjs
 pam-auth
