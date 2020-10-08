@@ -51,6 +51,11 @@ variable "s3_bucket_prefix" {
   default = "doubledigit-tfstate"
 }
 
+variable "default_target_group_port" {
+  type        = number
+  description = "Target group port for ECS Cluster"
+}
+
 #####=============ASG Standards Tags===============#####
 variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
@@ -61,7 +66,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Jenkins-Master"
-    Project = "DoubleDigit-Solutions"
+    Project    = "DoubleDigit-Solutions"
   }
 }
 
@@ -71,7 +76,7 @@ locals {
     owner       = "Vivek"
     team        = "DoubleDigitTeam"
     environment = var.environment
-    Project = "DoubleDigit-Solutions"
+    Project     = "DoubleDigit-Solutions"
   }
 }
 
