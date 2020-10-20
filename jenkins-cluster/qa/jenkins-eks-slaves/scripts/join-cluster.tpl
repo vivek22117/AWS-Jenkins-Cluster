@@ -25,7 +25,7 @@ ComputerLauncher launcher = new SSHLauncher("'$INSTANCE_IP'", 22,
         "'$JENKINS_CREDENTIALS_ID'","", null, null, "", 60, 3, 15,
          new NonVerifyingKeyVerificationStrategy())
 
-Slave slave = new DumbSlave("'$INSTANCE_IP'-eks-'$ENV'", "/home/ec2-user", launcher)
+Slave slave = new DumbSlave("'$INSTANCE_IP'-'$ENV'-eks", "/home/ec2-user", launcher)
 
 slave.nodeDescription = "Jenkins slave for dev environment"
 slave.numExecutors = 2

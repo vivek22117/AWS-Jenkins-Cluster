@@ -27,6 +27,11 @@ systemctl enable docker
 systemctl start docker
 usermod -aG docker ec2-user
 
+
+echo "Install git"
+sudo yum install -y git
+
+
 echo "Install Telegraf"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
 yum localinstall -y /tmp/telegraf.rpm

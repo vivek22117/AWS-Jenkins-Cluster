@@ -20,7 +20,7 @@
             "tags" : {
                 "Tool" : "Packer",
                 "Author" : "vivek",
-                "Name": "Jenkins-Slave-AMI",
+                "Name": "Jenkins-Slave-EKS-AMI",
                 "Project": "DoubleDigit-Solutions"
             }
         }
