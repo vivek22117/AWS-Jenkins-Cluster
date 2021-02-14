@@ -27,6 +27,15 @@ systemctl enable docker
 systemctl start docker
 usermod -aG docker ec2-user
 
+echo "Install Helm"
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+chmod 700 get_helm.sh
+sudo ./get_helm.sh
+helm version
+
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo update
+
 
 echo "Install git"
 sudo yum install -y git
